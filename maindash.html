@@ -112,24 +112,32 @@
             font-size: 2rem;
             font-weight: bold;
             text-align: center;
-            line-height: 110px;
             box-shadow: 0 4px 8px rgba(0,0,0,0.3);
             cursor: pointer;
             animation: pulse 2s infinite;
-            transition: transform 0.3s ease;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            justify-content: center;
         }
         
         .sos-button:hover {
-            transform: scale(1.05);
+            transform: scale(1.05) rotate(5deg);
             background-color: #c82333;
+            box-shadow: 0 6px 12px rgba(0,0,0,0.4);
+        }
+        
+        .sos-button:active {
+            transform: scale(0.95);
+            background-color: #bd2130;
         }
         
         @keyframes pulse {
             0% {
                 box-shadow: 0 0 0 0 rgba(220, 53, 69, 0.7);
             }
-            70% {
-                box-shadow: 0 0 0 15px rgba(220, 53, 69, 0);
+            50% {
+                box-shadow: 0 0 0 15px rgba(220, 53, 69, 0.4);
             }
             100% {
                 box-shadow: 0 0 0 0 rgba(220, 53, 69, 0);
@@ -475,21 +483,21 @@
     </div>
 
     <!-- SOS Floating Button -->
-     <form action="https://api.web3forms.com/submit" method="POST">
+    <form action="https://api.web3forms.com/submit" method="POST">
+        <input type="hidden" name="access_key" value="c4936e92-1659-45bf-b364-7836cabe9a40">
+        <input type="hidden" name="action" value="approve">
     <div class="sos-container">
-        <input type="hidden" name="access_key" value="fb4e6eb0-e710-42a2-9314-0d08aec3c159">
-        <input type="hidden" name="redirect" value="https://web3forms.com/success">
-        <div class="sos-button" onclick="alert('Emergency alert sent! Responders have been notified of your location. Please stay on the line.')">SOS</div>
+      
+           
+            <button type="submit" class="sos-button" onclick="alert('Emergency alert sent! Responders have been notified of your location. Please stay on the line.')">SOS</button>
+
     </div>
 </form>
-
     <!-- Chatbot Widget -->
     <div class="chatbot-widget">
-
         <button class="chatbot-button" onclick="toggleChatbot()">
             <i class="bi bi-chat-dots-fill"></i>
         </button>
-
     </div>
 
     <!-- Chatbot Panel -->
