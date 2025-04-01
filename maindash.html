@@ -528,7 +528,89 @@
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"></script>
     <script>
-        // Chatbot functionality
+        // Disaster Management Chatbot - Knowledge Base
+        const disasterResponses = {
+            // General queries
+            "hello": "Hello! I'm the NDMS Assistant. How can I help you with disaster management information today?",
+            "hi": "Hi there! I'm the NDMS Assistant. How can I help you with disaster management today?",
+            "help": "I can help you with disaster alerts, evacuation center information, emergency contacts, safety protocols, and more. What specific information do you need?",
+            
+            // Disaster types
+            "flood": "For flood emergencies: 1) Move to higher ground immediately 2) Avoid walking or driving through floodwater 3) Follow evacuation orders 4) Call the emergency helpline at 112 if you're trapped. Would you like to know about nearby evacuation centers?",
+            "earthquake": "For earthquakes: 1) DROP to the ground 2) COVER by getting under sturdy furniture 3) HOLD ON until shaking stops 4) Stay away from windows and exterior walls 5) If outdoors, move to an open area away from buildings. Need more specific information?",
+            "fire": "For fire emergencies: 1) Evacuate immediately - don't collect belongings 2) If smoke is present, stay low 3) Check doors for heat before opening 4) Call 101 for Fire Department assistance 5) Use stairs, not elevators. Do you need evacuation guidance?",
+            "cyclone": "For cyclone safety: 1) Follow evacuation orders immediately 2) If staying home, move to the strongest room 3) Stay away from windows 4) Have emergency supplies ready 5) Keep monitoring official alerts. Would you like information on current cyclone warnings?",
+            "landslide": "For landslide safety: 1) Evacuate immediately if advised 2) Watch for signs like tilting trees or sudden changes in water levels 3) Move away from the path of the landslide 4) Contact emergency services at 112. Do you need information on landslide-prone areas?",
+            
+            // Resources
+            "evacuation": "Evacuation centers are currently operational in the following areas: Delhi (15), Mumbai (23), Chennai (18), Kolkata (12), and other major cities. I can help you locate the nearest center based on your location. Would you like specific center information?",
+            "shelter": "Government shelters provide food, water, medical assistance, sanitation facilities, and security. To find the nearest shelter, please share your current location or district name.",
+            "emergency contacts": "Key emergency numbers: National Emergency Response: 112, Fire: 101, Ambulance: 108, Police: 100, Disaster Management Helpline: 1078. You can also reach NDRF at 9711077372. Do you need specific regional contact information?",
+            "ndrf": "The National Disaster Response Force (NDRF) currently has 56 teams deployed across active disaster zones. For NDRF assistance, contact: 011-24363260 or 9711077372.",
+            "medical": "For medical emergencies in disaster zones, call 108 for ambulance services. Medical camps are established at all major evacuation centers with essential medicines and first aid. If you need specific medical assistance, please provide details.",
+            
+            // Current situations
+            "active disasters": "There are currently 12 active disaster zones being monitored, including floods in Assam and Bihar, cyclone aftermath in Odisha, and landslides in Himachal Pradesh. Which area are you specifically concerned about?",
+            "alerts": "Current alerts: 1) Severe flooding warning for eastern Uttar Pradesh 2) Cyclone warning for Tamil Nadu coast 3) Heatwave conditions in Central India 4) Heavy rainfall expected in Western Ghats region. Do you need details on any specific alert?",
+            
+            // Safety tips
+            "preparedness": "Disaster preparedness essentials: 1) Create an emergency plan with your family 2) Prepare an emergency kit with food, water, medicine, documents 3) Know evacuation routes 4) Keep emergency contacts handy 5) Stay informed through official channels. Would you like specific preparedness tips?",
+            "emergency kit": "Your emergency kit should include: Drinking water, non-perishable food, first aid supplies, medications, flashlight, battery-powered radio, batteries, important documents, cash, clothing, and hygiene items. Aim to be self-sufficient for at least 72 hours.",
+            "safety": "General safety during disasters: 1) Follow official instructions 2) Have emergency contacts ready 3) Keep emergency kit accessible 4) Plan meeting points with family 5) Know how to shut off utilities. What specific safety information do you need?",
+            
+            // Default response
+            "default": "I understand you're asking about disaster management. To provide the most helpful information, could you please be more specific about what you need help with? I can assist with emergency protocols, evacuation information, current alerts, or safety guidelines."
+        };
+    
+        // Function to find best matching response
+        function findBestResponse(userInput) {
+            userInput = userInput.toLowerCase();
+            
+            // Check for exact matches first
+            for (const key in disasterResponses) {
+                if (userInput.includes(key)) {
+                    return disasterResponses[key];
+                }
+            }
+            
+            // Check for disaster-related keywords
+            if (userInput.includes("flood") || userInput.includes("water") || userInput.includes("submerged")) {
+                return disasterResponses["flood"];
+            } else if (userInput.includes("earthquake") || userInput.includes("tremor") || userInput.includes("shaking")) {
+                return disasterResponses["earthquake"];
+            } else if (userInput.includes("fire") || userInput.includes("burning") || userInput.includes("smoke")) {
+                return disasterResponses["fire"];
+            } else if (userInput.includes("cyclone") || userInput.includes("hurricane") || userInput.includes("storm") || userInput.includes("typhoon")) {
+                return disasterResponses["cyclone"];
+            } else if (userInput.includes("landslide") || userInput.includes("mudslide") || userInput.includes("rockfall")) {
+                return disasterResponses["landslide"];
+            } else if (userInput.includes("evacuate") || userInput.includes("evacuation") || userInput.includes("leave area")) {
+                return disasterResponses["evacuation"];
+            } else if (userInput.includes("shelter") || userInput.includes("camp") || userInput.includes("refuge")) {
+                return disasterResponses["shelter"];
+            } else if (userInput.includes("contact") || userInput.includes("phone") || userInput.includes("number") || userInput.includes("hotline")) {
+                return disasterResponses["emergency contacts"];
+            } else if (userInput.includes("ndrf") || userInput.includes("response force") || userInput.includes("rescue team")) {
+                return disasterResponses["ndrf"];
+            } else if (userInput.includes("medical") || userInput.includes("hospital") || userInput.includes("doctor") || userInput.includes("medicine")) {
+                return disasterResponses["medical"];
+            } else if (userInput.includes("alert") || userInput.includes("warning") || userInput.includes("notice")) {
+                return disasterResponses["alerts"];
+            } else if (userInput.includes("prepare") || userInput.includes("readiness") || userInput.includes("ready")) {
+                return disasterResponses["preparedness"];
+            } else if (userInput.includes("kit") || userInput.includes("supplies") || userInput.includes("pack")) {
+                return disasterResponses["emergency kit"];
+            } else if (userInput.includes("safe") || userInput.includes("safety") || userInput.includes("protect")) {
+                return disasterResponses["safety"];
+            } else if (userInput.includes("disaster") || userInput.includes("emergency") || userInput.includes("crisis")) {
+                return disasterResponses["active disasters"];
+            }
+            
+            // Default response if no matches
+            return disasterResponses["default"];
+        }
+    
+        // Enhanced chatbot functionality
         function toggleChatbot() {
             const panel = document.getElementById('chatbotPanel');
             if (panel.style.display === 'block') {
@@ -538,39 +620,124 @@
                 document.getElementById('chatInput').focus();
             }
         }
-        
-        function sendMessage() {
-            const input = document.getElementById('chatInput');
-            const message = input.value.trim();
+    
+        // Function to add a message to the chat
+        function addMessage(message, sender) {
+            const chatBody = document.getElementById('chatbotBody');
+            const messageDiv = document.createElement('div');
             
-            if (message) {
-                const chatBody = document.getElementById('chatbotBody');
-                
-                // Add user message
-                const userDiv = document.createElement('div');
-                userDiv.style.textAlign = 'right';
-                userDiv.innerHTML = `<div style="background-color: #f0f0f0; padding: 10px; border-radius: 10px; display: inline-block; margin-bottom: 10px; max-width: 80%;">
-                    <strong>You:</strong> ${message}
-                </div>`;
-                chatBody.appendChild(userDiv);
-                
-                // Simulate bot response (would connect to actual backend in real implementation)
-                setTimeout(() => {
-                    const botDiv = document.createElement('div');
-                    botDiv.innerHTML = `<div style="background-color: #e6f2ff; padding: 10px; border-radius: 10px; margin-bottom: 10px; max-width: 80%;">
-                        <strong>Disaster Assistant:</strong> I'm processing your query about "${message}". Our team will provide assistance shortly. For immediate emergencies, please use the SOS button.
-                    </div>`;
-                    chatBody.appendChild(botDiv);
-                    chatBody.scrollTop = chatBody.scrollHeight;
-                }, 1000);
-                
-                // Clear input
-                input.value = '';
-                
-                // Scroll to bottom
-                chatBody.scrollTop = chatBody.scrollHeight;
+            if (sender === 'user') {
+                messageDiv.style.backgroundColor = '#f0f0f0';
+                messageDiv.style.marginLeft = '20%';
+                messageDiv.innerHTML = `<strong>You:</strong> ${message}`;
+            } else {
+                messageDiv.style.backgroundColor = '#e6f2ff';
+                messageDiv.innerHTML = `<strong>Disaster Assistant:</strong> ${message}`;
+            }
+            
+            messageDiv.style.padding = '10px';
+            messageDiv.style.borderRadius = '10px';
+            messageDiv.style.marginBottom = '10px';
+            
+            chatBody.appendChild(messageDiv);
+            chatBody.scrollTop = chatBody.scrollHeight;
+        }
+    
+        // Function to show typing indicator
+        function showTypingIndicator() {
+            const chatBody = document.getElementById('chatbotBody');
+            const typingDiv = document.createElement('div');
+            typingDiv.id = 'typingIndicator';
+            typingDiv.style.backgroundColor = '#e6f2ff';
+            typingDiv.style.padding = '10px';
+            typingDiv.style.borderRadius = '10px';
+            typingDiv.style.marginBottom = '10px';
+            typingDiv.innerHTML = `<strong>Disaster Assistant:</strong> <span class="dot">.</span><span class="dot">.</span><span class="dot">.</span>`;
+            
+            chatBody.appendChild(typingDiv);
+            chatBody.scrollTop = chatBody.scrollHeight;
+        }
+    
+        // Function to remove typing indicator
+        function removeTypingIndicator() {
+            const typingIndicator = document.getElementById('typingIndicator');
+            if (typingIndicator) {
+                typingIndicator.remove();
             }
         }
+    
+        // Function to send a message
+        function sendMessage() {
+            const chatInput = document.getElementById('chatInput');
+            const message = chatInput.value.trim();
+            
+            if (message === '') return;
+            
+            // Add user message to chat
+            addMessage(message, 'user');
+            
+            // Clear input field
+            chatInput.value = '';
+            
+            // Show typing indicator
+            showTypingIndicator();
+            
+            // Simulate processing time
+            setTimeout(() => {
+                // Remove typing indicator
+                removeTypingIndicator();
+                
+                // Get response from knowledge base
+                const response = findBestResponse(message);
+                
+                // Add bot response to chat
+                addMessage(response, 'bot');
+            }, 1000);
+        }
+    
+        // Add event listener for Enter key
+        document.getElementById('chatInput').addEventListener('keydown', function(event) {
+            if (event.key === 'Enter') {
+                sendMessage();
+            }
+        });
+    
+        // Function to get user's location for more precise assistance
+        function getUserLocation() {
+            if (navigator.geolocation) {
+                navigator.geolocation.getCurrentPosition(
+                    (position) => {
+                        // Store coordinates for emergency services
+                        const latitude = position.coords.latitude;
+                        const longitude = position.coords.longitude;
+                        
+                        // Could be used to find nearest evacuation centers
+                        console.log(`User location: ${latitude}, ${longitude}`);
+                    },
+                    (error) => {
+                        console.error("Error getting location:", error.message);
+                    }
+                );
+            }
+        }
+    
+        // Initialize the chatbot when page loads
+        document.addEventListener('DOMContentLoaded', function() {
+            // Set initial display state for chatbot panel
+            document.getElementById('chatbotPanel').style.display = 'none';
+            
+            // Try to get user location for emergency assistance
+            getUserLocation();
+        });
+    
+        // SOS button enhanced functionality
+        document.querySelector('.sos-button').addEventListener('click', function() {
+            // Get user location if available
+            getUserLocation();
+            
+            // Additional emergency actions could be implemented here
+            // Such as sending location to emergency services API
+        });
     </script>
 </body>
 </html>
