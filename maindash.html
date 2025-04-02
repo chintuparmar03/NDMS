@@ -403,15 +403,15 @@
     </div>
 
     <!-- SOS Floating Button -->
+    
     <form action="https://api.web3forms.com/submit" method="POST">
         <input type="hidden" name="access_key" value="c4936e92-1659-45bf-b364-7836cabe9a40">
-        <input type="hidden" name="action" value="approve">
-    <div class="sos-container">
-      
-           
+        <input type="hidden" name="latitude" id="latitude">
+        <input type="hidden" name="longitude" id="longitude">  
+         <div class="sos-container">
             <button type="submit" class="sos-button" onclick="alert('Emergency alert sent! Responders have been notified of your location. Please stay on the line.')">SOS</button>
 
-    </div>
+         </div>
 </form>
 
     
@@ -425,7 +425,23 @@
     
     <script src="https://cdn.botpress.cloud/webchat/v2.3/inject.js"></script>
 <script src="https://files.bpcontent.cloud/2025/03/31/13/20250331130720-PTM386XZ.js"></script>
-   
+    <script>
+  //Get location when the page loads
+    window.addEventListener('load', function() {
+        if (navigator.geolocation) {
+            navigator.geolocation.getCurrentPosition(function(position) {
+                // Store the coordinates in the hidden fields
+                document.getElementById('latitude').value = position.coords.latitude;
+                document.getElementById('longitude').value = position.coords.longitude;
+                console.log("Location captured: ", position.coords.latitude, position.coords.longitude);
+            }, function(error) {
+                console.error("Error getting location: ", error.message);
+            });
+        } else {
+            console.error("Geolocation is not supported by this browser");
+        }
+      });
+
         
     </script>
 </body>
